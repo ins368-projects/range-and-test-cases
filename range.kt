@@ -215,7 +215,30 @@ fun main(args: Array<String>) {
   // val range4 = Range("(3, 3)");
   // println(range4.getAllPoints().toList());
 
-  // 7. 
+  // 7. endPoints
+  // val range1 = Range("[1, 5]");
+  // println(range1.endPoints().toList());
+  // val range2 = Range("(4, 8)");
+  // println(range2.endPoints().toList());
+  // val range3 = Range("[10, 3)");
+  // println(range3.endPoints().toList());
+  // val range4 = Range("(3, 10)");
+  // println(range4.endPoints().toList());
+
+  // 8. overlapsRange()
+  // var range1 = Range("[3, 8]");
+  // println(range1.overlapsRange("[3, 8]"));
+  // var range2 = Range("(5, 10)");
+
+  // println(range2.overlapsRange("[3, 10]"));
+  // var range3 = Range("[1, 4]");
+
+  // println(range3.overlapsRange("[5, 8]"));
+  // var range4 = Range("(2, 7)");
+
+  // println(range4.overlapsRange("[7, 15)"));
+
+  // 
 }
 
 
