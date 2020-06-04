@@ -33,6 +33,18 @@ class Range(val range: String) {
   	return true;
   }
 
+  fun containsRange(range: String): Boolean {
+    val indicatedRange = Range(range);
+    val startsInRange = indicatedRange.start >= start && indicatedRange.start <= end;
+    val endsInRange = indicatedRange.end <= end && indicatedRange.end >= start;
+
+    val elementsAreContained = startsInRange && endsInRange;
+    if(elementsAreContained)
+      return true;
+    else
+      return false;
+  }
+
   fun getAllPoints(): Array<Int> {
     val size: Int = end - start;
     return Array(size + 1) { i -> start + i };
@@ -98,6 +110,11 @@ fun main(args: Array<String>) {
   println("notEquals():");
   val notEquals = range.notEquals("[4, 6]");
   println(notEquals);
+
+  // containsRange.
+  println("containsRange():");
+  val rangeIsContained = range.containsRange("[4, 5]");
+  println(rangeIsContained);
 }
 
 
