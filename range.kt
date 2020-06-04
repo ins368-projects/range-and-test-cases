@@ -50,6 +50,18 @@ class Range(val range: String) {
     else
       return false;
   }
+
+  fun equals(range: String): Boolean {
+    val indicatedRange = Range(range);
+    if(indicatedRange.start == start && indicatedRange.end == end)
+      return true;
+    else
+      return false;
+  }
+
+  fun notEquals(range: String): Boolean {
+    return !equals(range);
+  }
 }
 
 fun main(args: Array<String>) {
@@ -75,5 +87,17 @@ fun main(args: Array<String>) {
 
   // Test overlapsRange.
   println("overlapsRange():");
-  println(range.overlapsRange("[4, 6]"))
+  println(range.overlapsRange("[4, 6]"));
+
+  // Test equals.
+  println("equals():");
+  val areEquals = range.equals("(3, 7)");
+  println(areEquals);
+
+  // Test notEquals.
+  println("notEquals():");
+  val notEquals = range.notEquals("[4, 6]");
+  println(notEquals);
 }
+
+
