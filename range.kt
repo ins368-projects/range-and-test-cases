@@ -6,20 +6,43 @@ class Range(range: String) {
   init {
     this.range = range;
     val parts: List<String> = this.range.split(",");
+    val filterNumbersRegex = Regex("[^0-9]");
 
-    // Compute range start point.
-    val firstPart: String = parts[0];
-    val first = filterNumbersRegex.replace(firstPart, "").toInt()
-    val firstPointIsInclusive = firstPart[0] == '[';
+    if(parts.size == 2) {
+      val firstPart: String = parts[0];
+      val secondPart: String = parts[1];
 
-    this.start = if(firstPointIsInclusive) first else first + 1;
+      // Evaluate if provided range contains valid inclusive and exclusive range characters.
+      val firstCharacterIsRangeCharacter = firstPart[0] == '[' || firstPart[0] == '(';
+      val secondCharacterIsRangeCharacter = secondPart[secondPart.length -1] == ']' || secondPart[secondPart.length -1] == ')';
 
-    // Compute range end point.
-    val secondPart: String = parts[1].trim();
-    val last: Int = filterNumbersRegex.replace(secondPart, "").toInt();
-    val secondPointIsInclusive = secondPart[secondPart.length -1] == ']';
+      val thereAreValidRangeCharacters = firstCharacterIsRangeCharacter && secondCharacterIsRangeCharacter;
+      if(!thereAreValidRangeCharacters) {
+        throw IllegalArgumentException("El rango especificado no tiene el formato adecuado. Debe usar los símbolos '[]' o '()' para denotarlo)");
+      } else {
+        // Extract range start point.
+        try {
+          val first = filterNumbersRegex.replace(firstPart, "").toInt()
+          val firstPointIsInclusive = firstPart[0] == '[';
 
-    this.end = if(secondPointIsInclusive) last else last - 1;
+          this.start = if(firstPointIsInclusive) first else first + 1;
+        } catch(e: Exception) {
+          throw IllegalArgumentException("El rango especificado no tiene el formato adecuado. No se especificó un número en la primera parte del rango.");
+        }
+
+        // Extract end point.
+        try {
+          val last: Int = filterNumbersRegex.replace(secondPart, "").toInt();
+          val secondPointIsInclusive = secondPart[secondPart.length -1] == ']';
+
+          this.end = if(secondPointIsInclusive) last else last - 1;
+        } catch(e: Exception) {
+          throw IllegalArgumentException("El rango especificado no tiene el formato adecuado. No se especificó un número en la segunda parte del rango");
+        }
+      }
+    } else {
+      throw IllegalArgumentException("El rango especificado no tiene el formato adecuado. Debe separar este usando ','");
+    }
   }
 
   fun contains(numbers: Array<Int>): Boolean {
@@ -82,7 +105,7 @@ class Range(range: String) {
 }
 
 fun main(args: Array<String>) {
-	val range = Range("[3,6]");
+	val range = Range("(3,6]");
 
   // Test contains().
   println("contains():");
@@ -131,5 +154,3 @@ fun main(args: Array<String>) {
   val rangeIsNotContained = range.doesNotContainsRange("[4, 5]");
   println(rangeIsNotContained);
 }
-
-
