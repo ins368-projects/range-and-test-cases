@@ -46,6 +46,9 @@ class Range(range: String) {
   }
 
   fun contains(numbers: Array<Int>): Boolean {
+    if(numbers.size == 0)
+      return false;
+
     for(number in numbers)
     	if(!(number in start..end))
         	return false;
@@ -109,7 +112,9 @@ fun main(args: Array<String>) {
 
   // Test contains().
   println("contains():");
-  val numbers: Array<Int> = Array(5) { i -> i + 1 };
+  val numbers: Array<Int> = Array(0) { i -> i + 1 };
+
+  println(numbers.toList())
   val isContained = range.contains(numbers);
   println(isContained);
 
