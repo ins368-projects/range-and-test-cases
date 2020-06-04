@@ -1,29 +1,26 @@
-class Range(val range: String) {
-  var start: Int = 0
-    get() {
-    	val parts: List<String> = range.split(",");
-      val firstPart: String = parts[0];
-      val first = firstPart
-          .substring(1)
-          .replace("[^0-9]+", "")
-          .toInt();
-      val isInclusive = firstPart[0] == '[';
+class Range(range: String) {
+  val range: String
+  val start: Int
+  val end: Int
 
-      return if(isInclusive) first else first + 1;
-    }
+  init {
+    this.range = range;
+    val parts: List<String> = this.range.split(",");
 
-  var end: Int = 0
-    get() {
-      val parts: List<String> = range.split(",");
-      val secondPart: String = parts[1];
-      val last: Int = secondPart
-         .substring(1, secondPart.length - 1)
-         .replace("[^0-9]+", "")
-         .toInt();
-      val isInclusive = secondPart[secondPart.length -1] == ']';
+    // Compute range start point.
+    val firstPart: String = parts[0];
+    val first = filterNumbersRegex.replace(firstPart, "").toInt()
+    val firstPointIsInclusive = firstPart[0] == '[';
 
-      return if(isInclusive) last else last - 1;
-    }
+    this.start = if(firstPointIsInclusive) first else first + 1;
+
+    // Compute range end point.
+    val secondPart: String = parts[1].trim();
+    val last: Int = filterNumbersRegex.replace(secondPart, "").toInt();
+    val secondPointIsInclusive = secondPart[secondPart.length -1] == ']';
+
+    this.end = if(secondPointIsInclusive) last else last - 1;
+  }
 
   fun contains(numbers: Array<Int>): Boolean {
     for(number in numbers)
@@ -31,6 +28,10 @@ class Range(val range: String) {
         	return false;
 
   	return true;
+  }
+
+  fun doesNotContains(numbers: Array<Int>): Boolean {
+    return !contains(numbers);
   }
 
   fun containsRange(range: String): Boolean {
@@ -81,13 +82,18 @@ class Range(val range: String) {
 }
 
 fun main(args: Array<String>) {
-	val range = Range("[3, 6]");
+	val range = Range("[3,6]");
 
   // Test contains().
-  println("isContained():");
+  println("contains():");
   val numbers: Array<Int> = Array(5) { i -> i + 1 };
   val isContained = range.contains(numbers);
   println(isContained);
+
+  // Test doesNotContains().
+  println("doesNotContains():");
+  val isNotContained = range.doesNotContains(numbers);
+  println(isNotContained);
 
   // Test getAllPoints.
   println("getAllPoints():");

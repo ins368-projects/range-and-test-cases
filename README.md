@@ -6,7 +6,7 @@ Go to [Range](https://codingdojo.org/kata/Range/) and develop that. In synthesis
 
 1. [x] Constructor
 2. [x] contains
-3. [] does not contains
+3. [x] does not contains
 4. [x] all points
 5. [x] ContainsRange
 6. [x] Does not ContainsRange
