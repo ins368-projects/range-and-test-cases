@@ -1,3 +1,5 @@
+import kotlin.math.abs;
+
 class Range(range: String) {
   val range: String
   val start: Int
@@ -6,7 +8,7 @@ class Range(range: String) {
   init {
     this.range = range;
     val parts: List<String> = this.range.split(",");
-    val filterNumbersRegex = Regex("[^0-9]");
+    val filterNumbersRegex = Regex("[^-?0-9]+");
 
     if(parts.size == 2) {
       val firstPart: String = parts[0];
@@ -77,8 +79,14 @@ class Range(range: String) {
   }
 
   fun getAllPoints(): Array<Int> {
-    val size: Int = end - start;
-    return Array(size + 1) { i -> start + i };
+    val numbers = (start..end).toList();
+    val points = Array(numbers.size) { 0 };
+
+    var i: Int = 0;
+    for(number in numbers)
+      points[i++] = number;
+  
+    return points;
   }
 
   fun endPoints(): Array<Int> {
@@ -108,54 +116,117 @@ class Range(range: String) {
 }
 
 fun main(args: Array<String>) {
-	val range = Range("(3,6]");
+	// 4 test cases for Range.
+	//val range1 = Range("[1, 7]");
+	//val range2 = Range("(1,10)");
+  //try {
+    //val range3 = Range("[8,15");
+  //} catch(e: Exception) {
+    //println(e);
+  //}
+  //try {
+    //val range4 = Range("[978 923)");
+  //} catch(Exception e) {
+    //println(e);
+  //}
 
-  // Test contains().
-  println("contains():");
-  val numbers: Array<Int> = Array(0) { i -> i + 1 };
+  // 
 
-  println(numbers.toList())
-  val isContained = range.contains(numbers);
-  println(isContained);
+  // 4 test cases for contains():
+  //val range1 = Range("[3, 6]");
+  //val array1 = Array(2) { i -> 4 + i };
+  //println(array1.toList());
+  //println(range1.contains(array1));
 
-  // Test doesNotContains().
-  println("doesNotContains():");
-  val isNotContained = range.doesNotContains(numbers);
-  println(isNotContained);
+  //val range2 = Range("(10, 22)");
+  //val array2 = Array(4) { i -> 18 + i };
+  //println(array2.toList());
+  //println(range2.contains(array2));
 
-  // Test getAllPoints.
-  println("getAllPoints():");
-  val allPoints: Array<Int> = range.getAllPoints();
-  for(point in allPoints)
-    println(point);
+  //val range3 = Range("[5, 10)");
+  //val array3 = Array(3) { i -> 8 + i };
+  //println(array3.toList());
+  //println(range3.contains(array3));
+
+  //val range4 = Range("[321, 400]");
+  //val array4: Array<Int> = arrayOf(401, 402, 320);
+  //println(array4.toList());
+  //println(range4.contains(array4))
+
   
-  // Test endPoints.
-  println("endPoints():");
-  val endPoints = range.endPoints();
-  for(point in endPoints)
-    println(point);
+  //3. 4 test cases for doesNotContains():
+  //val range3 = Range("[5, 10)");
+  //val array3 = Array(3) { i -> 8 + i };
+  //println(array3.toList());
+  //println(range3.doesNotContains(array3));
 
-  // Test overlapsRange.
-  println("overlapsRange():");
-  println(range.overlapsRange("[4, 6]"));
+  //val range4 = Range("[321, 400]");
+  //val array4: Array<Int> = arrayOf(401, 402, 320);
+  //println(array4.toList());
+  //println(range4.doesNotContains(array4))
 
-  // Test equals.
-  println("equals():");
-  val areEquals = range.equals("(3, 7)");
-  println(areEquals);
+  //val range1 = Range("[3, 6]");
+  //val array1 = Array(2) { i -> 4 + i };
+  //println(array1.toList());
+  //println(range1.doesNotContains(array1));
 
-  // Test notEquals.
-  println("notEquals():");
-  val notEquals = range.notEquals("(3, 7)");
-  println(notEquals);
+  //val range2 = Range("(10, 22)");
+  //val array2 = Array(4) { i -> 18 + i };
+  //println(array2.toList());
+  //println(range2.doesNotContains(array2));
 
-  // containsRange.
-  println("containsRange():");
-  val rangeIsContained = range.containsRange("[4, 5]");
-  println(rangeIsContained);
 
-  // doesNotContainsRange.
-  println("doesNotContainsRange():");
-  val rangeIsNotContained = range.doesNotContainsRange("[4, 5]");
-  println(rangeIsNotContained);
+  // 4. containsRange():
+  //val range1 = Range("[1729, 2000)");
+  //println(range1.containsRange("(1728, 1999]"));
+
+  //val range2 = Range("(3, 8)");
+  //println(range2.containsRange("[4, 7]"));
+
+  //val range3 = Range("(15, 30]");
+  //println(range3.containsRange("[5, 15]"));
+
+  //val range4 = Range("(4, 10)");
+  //println(range4.containsRange("[4, 10]"));
+
+  // 5. doesNotContainsRange():
+  //val range3 = Range("(15, 30]");
+  //println(range3.doesNotContainsRange("[5, 15]"));
+
+  //val range4 = Range("(4, 10)");
+  //println(range4.doesNotContainsRange("[4, 10]"));
+
+  //val range1 = Range("[1729, 2000)");
+  //println(range1.doesNotContainsRange("(1728, 1999]"));
+
+  //val range2 = Range("(3, 8)");
+  //println(range2.doesNotContainsRange("[4, 7]"));
+
+  // 6. getAllPoints(): Array<Int>
+  // val range1 = Range("[1, 5]");
+  // println(range1.getAllPoints().toList());
+
+  // val range2 = Range("(-6, 3)");
+  // println(range2.getAllPoints().toList());
+
+  // val range3 = Range("[3, 3]");
+  // println(range3.getAllPoints().toList());
+
+  // val range4 = Range("(3, 3)");
+  // println(range4.getAllPoints().toList());
+
+  // 7. 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
