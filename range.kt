@@ -32,6 +32,11 @@ class Range(val range: String) {
 
   	return true;
   }
+
+  fun getAllPoints(): Array<Int> {
+    val size: Int = this.end - this.start;
+    return Array(size + 1) { i -> this.start + i };
+  }
 }
 
 
@@ -43,8 +48,14 @@ fun main(args: Array<String>) {
     println("f:<$f>");
     println("e:<$e>");
 
+    // Test contains()
     val numbers: Array<Int> = Array(5) { i -> i + 1};
     val isContained = range.contains(numbers);
-
     println("isContained: $isContained");
+
+    // Test getAllPoints.
+    val allPoints: Array<Int> = range.getAllPoints();
+    for(point in allPoints)
+      println(point);
+
 }
