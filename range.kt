@@ -45,6 +45,10 @@ class Range(val range: String) {
       return false;
   }
 
+  fun doesNotContainsRange(range: String): Boolean {
+    return !containsRange(range);
+  }
+
   fun getAllPoints(): Array<Int> {
     val size: Int = end - start;
     return Array(size + 1) { i -> start + i };
@@ -108,13 +112,18 @@ fun main(args: Array<String>) {
 
   // Test notEquals.
   println("notEquals():");
-  val notEquals = range.notEquals("[4, 6]");
+  val notEquals = range.notEquals("(3, 7)");
   println(notEquals);
 
   // containsRange.
   println("containsRange():");
   val rangeIsContained = range.containsRange("[4, 5]");
   println(rangeIsContained);
+
+  // doesNotContainsRange.
+  println("doesNotContainsRange():");
+  val rangeIsNotContained = range.doesNotContainsRange("[4, 5]");
+  println(rangeIsNotContained);
 }
 
 

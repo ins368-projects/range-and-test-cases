@@ -9,7 +9,7 @@ Go to [Range](https://codingdojo.org/kata/Range/) and develop that. In synthesis
 3. [] does not contains
 4. [x] all points
 5. [x] ContainsRange
-6. [] Does not ContainsRange
+6. [x] Does not ContainsRange
 7. [x] endPoints
 8. [x] overlapsRange
 9. [x] equals
